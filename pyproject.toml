@@ -6,28 +6,24 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "cryptoolsec"
 version = "0.1.0"
-description = "CLI and GUI tool in Python for strong file/stream encryption (AES-GCM) and decryption, using Argon2id for password-based keys." # Added description
-readme = "README.md" # Specify readme file
-requires-python = ">=3.10" # Adjust if needed
-license = {text = "MIT License"} # Example license, choose one appropriate
-# authors = [ {name = "Jean Victor", email = "your_email@example.com"} ] # Example author info
+description = "CLI and GUI tool in Python for strong file/stream encryption (AES-GCM) and decryption, using Argon2id for password-based keys."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT License"}
+# authors = [ {name = "my_name", email = "my_email@example.com"} ]
 dependencies = [
     "argon2-cffi>=21.1.0",
     "pycryptodome>=3.10.1",
-    "PySide6>=6.4.0", # Adjust version as needed
+    "PySide6>=6.4.0",
 ]
 
-# Optional: Define where your source code lives (good practice)
 [tool.setuptools.packages.find]
-where = ["."] # Look for packages in the current directory
-include = ["cryptoolsec*"] # Include the main package and subpackages
-exclude = ["tests*"] # Exclude tests from the main package install
+where = ["."]
+include = ["cryptoolsec*"]
+exclude = ["tests*"]
 
-# --- Entry Points ---
 [project.scripts]
-# Creates 'cryptoolsec' command pointing to cryptoolsec.main:main()
 cryptoolsec = "cryptoolsec.main:main"
 
 [project.gui-scripts]
-# Creates 'cryptoolsec-gui' command pointing to cryptoolsec.gui.app:run()
 cryptoolsec-gui = "cryptoolsec.gui.app:run"
