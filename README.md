@@ -183,7 +183,7 @@ cat backup.tar.gz.enc | cryptoolsec decrypt --keyfile secret.key | tar xzf - -C 
 
 7. **Repeat:** Input fields will clear automatically after the operation finishes.
 
-![Cryptoolsec GUI Screenshot](docs/img/screenshot.png)
+
 
 
 ## 6. File Format
