@@ -6,6 +6,7 @@
 ![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macos-lightgrey.svg)
 ![Framework](https://img.shields.io/badge/Framework-PySide6%2FQt6-success.svg)
 
+
 ## 1. Description
 
 **Cryptoolsec** is a versatile tool providing both a Command-Line Interface (CLI) and a Graphical User Interface (GUI) for strong file and data stream encryption/decryption on Windows, macOS, and Linux.
@@ -182,7 +183,7 @@ cat backup.tar.gz.enc | cryptoolsec decrypt --keyfile secret.key | tar xzf - -C 
 
 7. **Repeat:** Input fields will clear automatically after the operation finishes.
 
-**(Optional: Add a screenshot here)**
+![Cryptoolsec GUI Screenshot](docs/img/screenshot.png)
 
 
 ## 6. File Format
