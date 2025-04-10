@@ -1,0 +1,31 @@
+#.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+venv/
+env/
+ENV/
+
+# Build / Distribution / Installation artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE / Editor specific files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sublime-*
+
+# OS specific files
+.DS_Store
+Thumbs.db
