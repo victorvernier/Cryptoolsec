@@ -1,238 +1,221 @@
-# Cryptoolsec: Secure Encryption CLI
-
+# Cryptoolsec: Secure CLI & GUI Encryption Tool
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-
+[![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+![Status](https://img.shields.io/badge/status-pre--release-orange.svg)
+![Platforms](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macos-lightgrey.svg)
+![Framework](https://img.shields.io/badge/Framework-PySide6%2FQt6-success.svg)
 
 ## 1. Description
 
-`cryptoolsec` is a command-line interface (CLI) tool written in Python 3 for performing strong encryption and decryption of files or data streams. It utilizes the robust **AES-256-GCM** authenticated encryption algorithm.
+**Cryptoolsec** is a versatile tool providing both a Command-Line Interface (CLI) and a Graphical User Interface (GUI) for strong file and data stream encryption/decryption on Windows, macOS, and Linux.
 
-When using passwords, `cryptoolsec` derives the encryption key using the secure **Argon2id** key derivation function. Alternatively, you can provide a raw AES-256 key directly via a key file.
+It leverages the robust **AES-256-GCM** authenticated encryption standard, ensuring confidentiality, integrity, and authenticity. For password-based operations, keys are securely derived using **Argon2id** with unique salts per encryption. Alternatively, raw 32-byte AES keys can be used directly via key files.
 
-This tool is designed with security, efficiency, and usability in mind, suitable for both command-line automation and manual file protection.
-
-**Security Features:**
-
-* **Encryption Algorithm:** AES-256-GCM (Advanced Encryption Standard - Galois/Counter Mode) provides confidentiality, data integrity, and authenticity.
-* **Key Derivation (Password Mode):** Argon2id (current secure standard) derives a strong 256-bit encryption key from the user's password, protecting against brute-force/dictionary attacks.
-* **Salting (Password Mode):** A unique, cryptographically secure 16-byte salt is generated for each password-based encryption and stored with the ciphertext, ensuring the same password results in different ciphertext each time.
-* **Nonce (IV):** A unique 12-byte nonce (Initialization Vector) is generated for each encryption operation (both password and keyfile modes) as required by AES-GCM.
-* **Key File Mode:** Allows using a pre-generated, raw 32-byte (256-bit) AES key for operations, bypassing password derivation.
-* **Secure Password Prompt:** Uses `getpass` to avoid echoing passwords to the terminal during interactive input.
-
-**Efficiency:**
-
-* Reads input and writes output using buffered I/O (streaming).
-* Cryptographic operations using `pycryptodome` are performed on data chunks, making the tool suitable for encrypting/decrypting files larger than available RAM without loading the entire content into memory at once.
+The application is built with Python and PySide6 (for the GUI), featuring streaming I/O for handling large files efficiently and a threaded GUI for a responsive user experience.
 
 
-## 2. Index
+## 2. Key Features
+
+* **Dual Interface:** Functional CLI (`cryptoolsec`) and modern GUI (`cryptoolsec-gui`).
+* **Strong Encryption:** AES-256-GCM standard.
+* **Secure Key Derivation:** Argon2id with unique salts for passwords.
+* **Flexible Secret Handling:** Supports interactive passwords, password files, password via stdin, and raw key files.
+* **Large File Support:** Uses streaming I/O (chunked processing) for low memory usage.
+* **Responsive GUI:** Background threading prevents UI freezing during operations.
+* **GUI Enhancements:** Progress bar, status messages, platform icon, intelligent output filename suggestion, automatic field clearing.
+* **Cross-Platform:** Python codebase designed for Windows, macOS, and Linux. Packaged builds available (starting with Windows).
+
+
+## 3. Index
 
 * [1. Description](#1-description)
-* [2. Index](#2-index)
-* [3. Installation](#3-installation)
-* [4. Usage](#4-usage)
-    * [4.1. General Syntax](#41-general-syntax)
-    * [4.2. Common Options](#42-common-options)
-    * [4.3. Providing the Secret (Password/Key)](#43-providing-the-secret-passwordkey)
-    * [4.4. Encryption Examples](#44-encryption-examples)
-    * [4.5. Decryption Examples](#45-decryption-examples)
-    * [4.6. Using Pipes (Streams)](#46-using-pipes-streams)
-* [5. Technologies Used](#5-technologies-used)
-* [6. License](#6-license)
-* [7. Project Status](#7-project-status)
-* [8. Contribution](#8-contribution)
-* [9. Contact](#9-contact)
+* [2. Key Features](#2-key-features)
+* [3. Index](#3-index)
+* [4. Installation](#4-installation)
+* [5. Usage](#5-usage)
+    * [5.1. Launching](#51-launching)
+    * [5.2. CLI Usage](#52-cli-usage)
+        * [5.2.1. General Syntax](#521-general-syntax)
+        * [5.2.2. Commands](#522-commands)
+        * [5.2.3. Common Options](#523-common-options)
+        * [5.2.4. Secret Options](#524-secret-options)
+        * [5.2.5. CLI Examples](#525-cli-examples)
+    * [5.3. GUI Usage](#53-gui-usage)
+* [6. File Format](#6-file-format)
+* [7. Technologies Used](#7-technologies-used)
+* [8. License](#8-license)
+* [9. Project Status](#9-project-status)
+* [10. Contribution](#10-contribution)
+* [11. Contact](#11-contact)
 
 
-## 3. Installation
+## 4. Installation
 
 1.  **Prerequisites:**
-    * Python 3.x (developed/tested with 3.10+, but likely compatible with >= 3.8)
-    * `pip` (Python package installer, usually included with Python)
+    * Python (>= 3.10 recommended, as specified in `pyproject.toml`).
+    * `pip` (Python package installer).
 
-2.  **Clone or Download the Source:**
-    Obtain the project files (e.g., using `git clone` if it's in a repository, or by downloading and extracting a source archive).
+2.  **Clone or Download:**
+    * Obtain the project source code.
     ```bash
-    # Example if using Git
-    # git clone https://github.com/victorvernier/Cryptoolsec.git
-    # cd cryptoolsec
+    # Example using Git
+    git clone https://github.com/victorvernier/Cryptoolsec.git
+    # cd Cryptoolsec
     ```
 
-3.  **(Optional but Recommended) Create a Virtual Environment:**
+3.  **Create & Activate Virtual Environment (Recommended):**
+    * Navigate to the project root directory in your terminal.
     ```bash
+    # Create venv
     python -m venv .venv
-    # Activate the environment
-
-    # Windows (Command Prompt/PowerShell):
-    # .\venv\Scripts\activate
-    
-    # Linux/macOS (Bash/Zsh):
-    # source .venv/bin/activate
+    # Activate venv
+    # Windows: .\.venv\Scripts\activate
+    # Linux/macOS: source .venv/bin/activate
     ```
 
-4.  **Install Dependencies:**
-    Navigate to the project's root directory (the one containing `requirements.txt`) in your terminal and install the required libraries:
+4.  **Install Project and Dependencies:**
+    * With the virtual environment activated, install `Cryptoolsec` and its dependencies using `pip` and the `pyproject.toml` file. Using the editable (`-e`) flag is recommended for development.
     ```bash
-    pip install -r requirements.txt
+    # Installs dependencies and creates the 'cryptoolsec' and 'cryptoolsec-gui' commands
+    pip install -e .
     ```
-    This will install `pycryptodome` and `argon2-cffi`.
+    * This command reads `pyproject.toml`, installs the packages listed under `dependencies` (`PySide6`, `pycryptodome`, `argon2-cffi`), and makes the entry points available.
 
 
-## 4. Usage
+## 5. Usage
 
-### 4.1. General Syntax
+### 5.1. Launching
 
-`cryptoolsec` is run as a Python module from the project's root directory (the directory containing the `cryptoolsec` package folder).
+After installation (`pip install -e .`), the following commands become available in your terminal (while the virtual environment is active):
+
+* **Launch GUI:**
+    ```bash
+    cryptoolsec-gui
+    ```
+* **Use CLI:**
+    ```bash
+    cryptoolsec <command> [options...]
+    ```
+
+### 5.2. CLI Usage
+
+
+#### 5.2.1. General Syntax
 
 ```bash
-python -m cryptoolsec.main <command> [options...]
-# Or using 'py' launcher on Windows
-# py -m cryptoolsec.main <command> [options...]
+cryptoolsec <command> [options...]
 ```
 
 
-## Commands:
+#### 5.2.2. Commands
 
-* `encrypt`: Encrypt data.
-* `decrypt`: Decrypt data.
+* `encrypt`: Encrypt input file/stream to output file/stream.
+* `decrypt`: Decrypt input file/stream to output file/stream.
 
 
-## Getting Help:
+#### 5.2.3. Common Options
 
+* `-i FILE`, `--input FILE`: Input file path. Reads from stdin if omitted.
+* `-o FILE`, `--output FILE`: Output file path. Writes to stdout if omitted.
+* `--verbose`: Show detailed debug messages.
+* `-q`, `--quiet`: Show only error messages.
+* `-V`, `--version`: Show program version.
+* `-h`, `--help`: Show help message (use after command for specific help, e.g., `cryptoolsec encrypt -h`).
+
+
+#### 5.2.4. Secret Options
+
+One of these mutually exclusive options is required for both `encrypt` and `decrypt`:
+
+* `--password-interactive`: Securely prompts for password entry.
+* `--password-file FILE`: Reads password from the first line of `FILE`.
+* `--password-stdin`: Reads password from the first line of stdin (for piping).
+* `--keyfile FILE`: Uses the raw 32-byte AES key from `FILE`.
+
+
+#### 5.2.5. CLI Examples
+
+* Encrypt `doc.txt` to `doc.enc` using interactive password:
 ```bash
-# General help
-python -m cryptoolsec.main -h
-
-# Help for the encrypt command
-python -m cryptoolsec.main encrypt -h
-
-# Help for the decrypt command
-python -m cryptoolsec.main decrypt -h
+cryptoolsec encrypt -i doc.txt -o doc.enc --password-interactive
 ```
 
-## 4.2. Common Options
-
-* `-i FILE`, `--input FILE`: Path to the input file. If omitted, reads from standard input (stdin).
-* `-o FILE`, --output FILE: Path to the output file. If omitted, writes to standard output (stdout).
-* `-v`, `--verbose`: Enable detailed debug logging output to stderr.
-* `-q`, `--`: Suppress informational logs; only show errors on stderr.
-* `-V`, `--version`: Display the program's version
-
-
-## 4.3. Providing the Secret (Password/Key)
-
-For both `encrypt` and `decrypt` commands, you must provide the secret using one of the following mutually exclusive options:
-
-* `--password-interactive`: Prompts securely for the password (and confirmation during encryption) on the terminal. Recommended for manual use.
-
-* `--password-file FILE`: Reads the password from the first line of the specified `FILE`. Useful for automation, but ensure the file has appropriate permissions.
-
-* `--password-stdin`: Reads the password from the first line of standard input (stdin). Intended for piping passwords (e.g., from password managers or `echo`), do not use interactively.
-
-* `--keyfile FILE`: Uses the raw 32-byte (256-bit) AES key contained in the specified `FILE`. This bypasses password derivation (Argon2id) and salt generation/storage. Requires secure key generation and management.
-
-
-## 4.4. Encryption Examples
-
-* Encrypt file with interactive password:
+* Decrypt `pic.jpg.enc` to `pic.jpg` using password from `key.txt`:
 ```bash
-py -m cryptoolsec.main encrypt -i document.txt -o document.enc --password-interactive
-# Enter password when prompted
+cryptoolsec decrypt -i pic.jpg.enc -o pic.jpg --password-file key.txt
 ```
 
-* Encrypt file using a password stored in `pass.txt`:
+* Encrypt large `archive.zip` using `secret.key` file, show verbose logs:
 ```bash
-py -m cryptoolsec.main encrypt -i photo.jpg -o photo.jpg.enc --password-file pass.txt
+cryptoolsec --verbose encrypt --keyfile secret.key -i archive.zip -o archive.zip.enc
 ```
 
-* Encrypt file using a raw key from `my.key` (verbose output):
+* Compress, encrypt, and upload a folder using pipes:
 ```bash
-# First, ensure my.key contains exactly 32 raw bytes
-# Example generation (replace with a secure method if needed):
-# py -c "import sys, os; sys.stdout.buffer.write(os.urandom(32))" > my.key
+tar czf - /my/folder | cryptoolsec encrypt --keyfile secret.key > backup.tar.gz.enc
+# (Upload backup.tar.gz.enc)
+```
 
-py -m cryptoolsec.main encrypt -v --keyfile my.key -i archive.zip -o archive.zip.enc
+* Download, decrypt, and extract using pipes:
+```bash
+# (Download backup.tar.gz.enc first)
+cat backup.tar.gz.enc | cryptoolsec decrypt --keyfile secret.key | tar xzf - -C /restore/here
 ```
 
 
-## 4.5. Decryption Examples
+## 5.3. GUI Usage
 
-* Decrypt file with interactive password:
-```bash
-py -m cryptoolsec.main decrypt -i document.enc -o document_dec.txt --password-interactive
-# Enter the original password when prompted
-```
+1. **Launch:** Run `cryptoolsec-gui` in your terminal (after installation and with venv active).
 
-* Decrypt file using a password stored in `pass.txt`:
-```bash
-py -m cryptoolsec.main decrypt -i photo.jpg.enc -o photo_dec.jpg --password-file pass.txt
-```
+2. **Select Files:** Use the "Select..." buttons to choose your Input File and define your Output File path. The output filename will be suggested automatically based on the input file (adding/removing `.enc`).
 
-* Decrypt file using a raw key from `my.key` (quiet mode):
-```bash
-py -m cryptoolsec.main decrypt -q --keyfile my.key -i archive.zip.enc -o archive_dec.zip
-```
+3. ** Secret Method:** Select either "Use Password" or "Use Key File".
 
-## 4.6. Using Pipes (Streams)
+4. **Enter Secret:**
+    * If "Use Password", type the password in both fields (input is masked).
+    * If "Use Key File", click "Select Key File..." and choose your raw 32-byte key file.
 
-`cryptoolsec` handles standard input and output, allowing integration with other command-line tools via pipes (`|`).
+5. **Click Action:** Click "Encrypt" or "Decrypt".
 
-* Encrypt data piped from another command:
-```bash
-# Example: Compressing and encrypting a directory
-tar czf - /path/to/my_data | py -m cryptoolsec.main encrypt --password-file pass.txt > my_data.tar.gz.enc
-```
+6. **Monitor:** The UI will disable, and the progress bar will show activity (it might be indeterminate if reading from stdin, not yet implemented in GUI). A success or error message will appear upon completion.
 
-* Decrypt data and pipe it to another command:
-```bash
-# Example: Decrypting and extracting an archive
-py -m cryptoolsec.main decrypt --password-file pass.txt < my_data.tar.gz.enc | tar xzf - -C /path/to/restore/location
-```
+7. **Repeat:** Input fields will clear automatically after the operation finishes.
 
-* Encrypt text directly using `echo` and password from stdin:
-```bash
-# Note: Requires password on first line of stdin, data on subsequent lines (if using echo like this)
-# A better way for stdin password is often via a heredoc or password manager CLI
-printf '%s\n%s' "MySecretPassword" "This is secret text" | py -m cryptoolsec.main encrypt --password-stdin > secret.enc
-```
-
-*Decryption Example:*
-```bash
-printf '%s\n' "MySecretPassword" | py -m cryptoolsec.main decrypt --password-stdin < secret.enc
-# Should output: This is secret text
-```
-
-Important: When writing encrypted data to standard output without redirecting (`>`) or piping (`|`), your terminal might display garbled characters, as it's binary data.
+**(Optional: Add a screenshot here)**
 
 
-## 5. Technologies Used
+## 6. File Format
 
-* Python 3: Core language.
-* pycryptodome: Library for AES-256-GCM encryption/decryption operations.
-* argon2-cffi: Library for Argon2id key derivation function.
-* argparse: Standard library for parsing command-line arguments.
-* getpass: Standard library for securely prompting for passwords.
-* logging, os, sys: Standard libraries for logging and system interactions.
+The encrypted output (`.enc` file) format depends on the secret method used:
 
+* Password Mode: `[16-byte Salt][12-byte IV][Ciphertext][16-byte GCM Tag]`
 
-## 6. License
-[MIT License](https://github.com/victorvernier/Cryptoolsec/blob/main/LICENSE)
+* Key File Mode: `[12-byte IV][Ciphertext][16-byte GCM Tag]` (No Salt is stored as none was needed for key derivation)
 
 
-## 7. Project Status
+## 7. Technologies Used
 
-**Beta** - Core functionality implemented and tested. Ongoing development may occur.
-
-Note on Efficiency: While I/O and cryptographic operations are streamed/chunked, extremely high throughput may depend on system resources (CPU for Argon2/AES, disk speed).
-
-
-## 8. Contribution
-
-Contributions, bug reports, and feature requests are welcome! Please refer to the project repository for contribution guidelines or open an [issue](https://github.com/victorvernier/Cryptoolsec/issues).
+* Python (>= 3.10)
+* PySide6 (for the GUI)
+* pycryptodome (for AES-GCM implementation)
+* argon2-cffi (for Argon2id key derivation)
+* PyInstaller (for packaging)
 
 
-## 9. Contact
+## 8. License
 
-For questions or suggestions, contact: **victorvernier@protonmail.com**
+Distributed under the GPL-3.0 license. See LICENSE file or [LICENSE](https://github.com/victorvernier/Cryptoolsec/blob/main/LICENSE) for more information.
+
+
+## 9. Project Status
+
+**v0.2.0 - Beta / Pre-release:** Core functionality for both CLI and GUI is implemented and has undergone successful manual testing. However, automated test coverage is still pending. **Not recommended for production use with critical data until further testing.**
+
+
+## 10. Contribution
+Contributions, bug reports, and feature requests are welcome! Please open an [issues](https://github.com/victorvernier/Cryptoolsec/issues) to discuss changes or report problems.
+
+
+## 11. Contact
+[Jean V O Melo](https://orcid.org/0009-0006-5691-6159) | [E-mail](victorvernier@proton.me) | [Cryptoolsec](https://github.com/victorvernier/Cryptoolsec)
