@@ -1,0 +1,4 @@
+# requirements.txt
+argon2-cffi
+pycryptodome
+pySide6
