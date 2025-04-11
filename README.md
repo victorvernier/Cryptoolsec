@@ -211,7 +211,7 @@ Distributed under the GPL-3.0 license. See LICENSE file or [LICENSE](https://git
 
 ## 9. Project Status
 
-**v0.2.0 - Beta / Pre-release:** Core functionality for both CLI and GUI is implemented and has undergone successful manual testing. However, automated test coverage is still pending. **Not recommended for production use with critical data until further testing.**
+**v0.2.0 - Beta / Pre-release:** Core functionality for both CLI and GUI is implemented. Successfully passed initial manual tests and a core suite of automated end-to-end CLI tests covering main encryption/decryption workflows (password file, keyfile) and common error conditions (wrong password, file not found). Comprehensive automated test coverage (more CLI scenarios, unit tests, GUI tests) is pending. **Not recommended for production use with critical data until further testing.**
 
 
 ## 10. Contribution
