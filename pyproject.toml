@@ -5,17 +5,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cryptoolsec"
-version = "0.1.0"
+version = "0.2.0"
 description = "CLI and GUI tool in Python for strong file/stream encryption (AES-GCM) and decryption, using Argon2id for password-based keys."
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "GPLv3"}
-# authors = [ {name = "my_name", email = "my_email@example.com"} ]
+license = {text = "GPL-3.0 license"}
+authors = [ {name = "Victor Vernier", email = "victorvernier@proton.me"} ]
 dependencies = [
     "argon2-cffi>=21.1.0",
     "pycryptodome>=3.10.1",
     "PySide6>=6.4.0",
 ]
+
 
 [tool.setuptools.packages.find]
 where = ["."]
@@ -27,3 +28,9 @@ cryptoolsec = "cryptoolsec.main:main"
 
 [project.gui-scripts]
 cryptoolsec-gui = "cryptoolsec.gui.app:run"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    
+]
