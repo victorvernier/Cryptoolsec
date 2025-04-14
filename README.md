@@ -206,7 +206,7 @@ The encrypted output (`.enc` file) format depends on the secret method used:
 
 ## 8. License
 
-Distributed under the GPL-3.0 license. See LICENSE file or [LICENSE](https://github.com/victorvernier/Cryptoolsec/blob/main/LICENSE) for more information.
+Distributed under the GPL-3.0 license. See LICENSE file or [LICENSE](https://github.com/l0g0rhythm/Cryptoolsec/blob/main/LICENSE) for more information.
 
 
 ## 9. Project Status
@@ -215,8 +215,9 @@ Distributed under the GPL-3.0 license. See LICENSE file or [LICENSE](https://git
 
 
 ## 10. Contribution
-Contributions, bug reports, and feature requests are welcome! Please open an [issues](https://github.com/victorvernier/Cryptoolsec/issues) to discuss changes or report problems.
+Contributions, bug reports, and feature requests are welcome! Please open an [issues](https://github.com/l0g0rhythm/Cryptoolsec/issues) to discuss changes or report problems.
 
 
 ## 11. Contact
-[Jean V O Melo](https://orcid.org/0009-0006-5691-6159) | [E-mail](victorvernier@proton.me) | [Cryptoolsec](https://github.com/victorvernier/Cryptoolsec)
+
+Victor Oliveira (L0g0rhythm) - Connect via the links on the profile site: [l0g0rhythm.github.io](https://l0g0rhythm.github.io/)
